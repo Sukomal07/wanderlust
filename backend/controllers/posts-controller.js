@@ -1,10 +1,6 @@
 import Post from '../models/post.js';
 import User from '../models/user.js';
-import {
-  deleteDataFromCache,
-  retrieveDataFromCache,
-  storeDataInCache,
-} from '../utils/cache-posts.js';
+import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts.js';
 import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';
 export const createPostHandler = async (req, res) => {
   try {
@@ -157,6 +153,23 @@ export const deletePostByIdHandler = async (req, res) => {
     await User.findByIdAndUpdate(post.authorId, { $pull: { posts: req.params.id } });
 
     res.status(HTTP_STATUS.OK).json({ message: RESPONSE_MESSAGES.POSTS.DELETED });
+  } catch (err) {
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
+  }
+};
+
+export const getRelatedPostsByCategories = async (req, res) => {
+  const { categories } = req.query;
+  if (!categories) {
+    return res
+      .status(HTTP_STATUS.NOT_FOUND)
+      .json({ message: RESPONSE_MESSAGES.POSTS.CATEGORIES_NOTFOUND });
+  }
+  try {
+    const filteredCategoryPosts = await Post.find({
+      categories: { $in: categories },
+    });
+    res.status(HTTP_STATUS.OK).json(filteredCategoryPosts);
   } catch (err) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }

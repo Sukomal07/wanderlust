@@ -21,7 +21,7 @@ export const RESPONSE_MESSAGES = {
   COMMON: {
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
     REQUIRED_FIELDS: 'All fields are required.',
-    SOMETHING_WRONG: 'Something went wrong'
+    SOMETHING_WRONG: 'Something went wrong',
   },
   POSTS: {
     CREATED: 'Post created successfully',
@@ -36,7 +36,8 @@ export const RESPONSE_MESSAGES = {
     SIGNED_UP: 'New user created',
     SIGNED_IN: 'Successfully signed in',
     SIGNED_OUT: 'Successfully signed out',
-    USER_EXISTS: 'User with this email or username already exists',
+    USER_EMAIL_EXISTS: 'Email already exists',
+    USER_USERNAME_EXISTS: 'Username already exists',
     EMAIL_ALREADY_IN_USE: 'Email have been already used.',
     USER_NOT_EXISTS: "User don't exist",
     AUTH_CODE_NOT_FOUND: 'Something went wrong',

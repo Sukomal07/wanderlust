@@ -10,9 +10,14 @@ import AdminUsers from '@/pages/admin-users';
 import AdminBlogs from '@/pages/admin-blogs';
 import NotFound from '@/pages/not-found';
 import UnprotectedRoute from './components/unprotected-route';
+import { useLayoutEffect } from 'react';
 import RequireAuth from './components/require-auth';
+import useThemeClass from './utils/theme-changer';
 
 function App() {
+  useLayoutEffect(() => {
+    useThemeClass();
+  }, []);
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -25,10 +30,10 @@ function App() {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
-            <Route element={<RequireAuth allowedRole={["ADMIN", "USER"]} />}>
+            <Route element={<RequireAuth allowedRole={['ADMIN', 'USER']} />}>
               <Route path="add-blog" element={<AddBlog />} />
             </Route>
-            <Route path='admin' element={<RequireAuth allowedRole={["ADMIN"]} />}>
+            <Route path="admin" element={<RequireAuth allowedRole={['ADMIN']} />}>
               <Route path="users" element={<AdminUsers />} />
               <Route path="blogs" element={<AdminBlogs />} />
             </Route>
